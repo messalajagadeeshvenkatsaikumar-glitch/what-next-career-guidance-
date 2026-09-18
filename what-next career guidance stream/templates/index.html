@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}What Next? — Find Your Career Path{% endblock %}
+{% block content %}
+<div id="splash-screen">
+    <div class="splash-content">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WHAT NEXT? Career Guidance" class="splash-logo">
+        <div class="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<div id="main-website" class="hidden-site">
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-text">
+            <h1>Not sure what's next?</h1>
+            <p>Discover the career path that fits who you are. Take our free
+               interest test and get personalized course, college, and job
+               recommendations — plus a step-by-step roadmap to get there.</p>
+            <div class="hero-actions">
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('interest_test') }}" class="btn btn-primary btn-featured">Take the Interest Test</a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-featured">Get Started Free</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline">I already have an account</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hero-graphic" aria-hidden="true">
+            <div class="hero-card card-1">Engineering</div>
+            <div class="hero-card card-2">Medicine</div>
+            <div class="hero-card card-3">Design</div>
+            <div class="hero-card card-4">Commerce</div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works">
+    <div class="container">
+        <h2>How It Works</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-num">1</span>
+                <h3>Sign Up</h3>
+                <p>Create a free account in under a minute.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">2</span>
+                <h3>Take the Test</h3>
+                <p>Answer 18 quick questions about your interests.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">3</span>
+                <h3>Get Your Result</h3>
+                <p>See the career category that fits you best.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">4</span>
+                <h3>Follow Your Roadmap</h3>
+                <p>Use your personalized step-by-step plan to move forward.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="categories-preview">
+    <div class="container">
+        <h2>Career Paths We Cover</h2>
+        <div class="category-grid">
+            <div class="category-card">Engineering &amp; Technology</div>
+            <div class="category-card">Medical &amp; Healthcare</div>
+            <div class="category-card">Commerce &amp; Business</div>
+            <div class="category-card">Arts &amp; Humanities</div>
+            <div class="category-card">Creative &amp; Design</div>
+            <div class="category-card">Government &amp; Public Service</div>
+        </div>
+    </div>
+</section>
+{% endblock %}

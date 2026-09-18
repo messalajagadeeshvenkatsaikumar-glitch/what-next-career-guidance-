@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Sign Up — What Next?{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <div class="container narrow">
+        <div class="auth-card">
+            <h1>Create Your Account</h1>
+            <p class="auth-sub">It only takes a minute.</p>
+            <form method="POST" action="{{ url_for('register') }}" class="form">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <div class="form-row">
+                    <div>
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="10" max="100">
+                    </div>
+                    <div>
+                        <label for="education_level">Current Education Level</label>
+                        <select id="education_level" name="education_level">
+                            <option value="">Select</option>
+                            <option value="Class 10">Class 10</option>
+                            <option value="Class 12">Class 12</option>
+                            <option value="Undergraduate">Undergraduate</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <button type="submit" class="btn btn-primary btn-full">Sign Up</button>
+            </form>
+            <p class="auth-switch">Already have an account?
+                <a href="{{ url_for('login') }}">Log in</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

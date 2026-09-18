@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Your Result — What Next?{% endblock %}
+{% block content %}
+<section class="page-header result-header">
+    <div class="container">
+        <p class="eyebrow">Your recommended career path</p>
+        <h1>{{ category }}</h1>
+        <p>{{ info.blurb }}</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <h2>Your Score Breakdown</h2>
+        <div class="score-bars">
+            {% for cat, score in sorted_scores %}
+            <div class="score-row">
+                <span class="score-label">{{ cat }}</span>
+                <div class="score-track">
+                    <div class="score-fill" style="width: {{ (score / 9 * 100) if score else 0 }}%;"></div>
+                </div>
+                <span class="score-value">{{ score }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="result-actions">
+            <a href="{{ url_for('courses', category=category) }}" class="btn btn-outline">See Courses</a>
+            <a href="{{ url_for('colleges', category=category) }}" class="btn btn-outline">See Colleges</a>
+            <a href="{{ url_for('jobs', category=category) }}" class="btn btn-outline">See Jobs</a>
+            <a href="{{ url_for('roadmap', category=category) }}" class="btn btn-primary">See My Roadmap</a>
+        </div>
+
+        <div class="result-links">
+            <a href="{{ url_for('interest_test') }}">Retake the test</a> ·
+            <a href="{{ url_for('dashboard') }}">Back to dashboard</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

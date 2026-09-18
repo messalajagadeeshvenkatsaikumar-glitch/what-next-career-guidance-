@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p><a href="{{ url_for('index') }}">Open main site</a> • <a href="{{ url_for('admin_logout') }}">Logout</a></p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-num">{{ users|length }}</span>
+                <span class="stat-label">Registered Users</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num">{{ quiz_results|length }}</span>
+                <span class="stat-label">Tests Taken</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num">{{ feedback|length }}</span>
+                <span class="stat-label">Feedback Entries</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num">{{ messages|length }}</span>
+                <span class="stat-label">Contact Messages</span>
+            </div>
+        </div>
+
+        <h2>Users</h2>
+        <div class="table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr><th>Name</th><th>Email</th><th>Age</th><th>Education</th><th>Joined</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                {% for u in users %}
+                    <tr>
+                        <td>{{ u['full_name'] }}</td>
+                        <td>{{ u['email'] }}</td>
+                        <td>{{ u['age'] or '-' }}</td>
+                        <td>{{ u['education_level'] or '-' }}</td>
+                        <td>{{ u['created_at'] }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin_delete_user', user_id=u['id']) }}" onsubmit="return confirm('Delete user and all related data?');">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6">No users yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Feedback</h2>
+        <div class="table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr><th>Name</th><th>Email</th><th>Rating</th><th>Message</th><th>Date</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                {% for f in feedback %}
+                    <tr>
+                        <td>{{ f['name'] or 'Anonymous' }}</td>
+                        <td>{{ f['email'] or '-' }}</td>
+                        <td>{{ f['rating'] or '-' }}</td>
+                        <td>{{ f['message'] }}</td>
+                        <td>{{ f['created_at'] }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin_delete_feedback', feedback_id=f['id']) }}" onsubmit="return confirm('Delete this feedback entry?');">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6">No feedback yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Contact Messages</h2>
+        <div class="table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                {% for m in messages %}
+                    <tr>
+                        <td>{{ m['name'] }}</td>
+                        <td>{{ m['email'] }}</td>
+                        <td>{{ m['subject'] or '-' }}</td>
+                        <td>{{ m['message'] }}</td>
+                        <td>{{ m['created_at'] }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin_delete_message', message_id=m['id']) }}" onsubmit="return confirm('Delete this contact message?');">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6">No messages yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

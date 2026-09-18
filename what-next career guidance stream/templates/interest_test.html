@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Interest Test — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Interest Test</h1>
+        <p>Rate how much each statement sounds like you. There are no right
+           or wrong answers — just answer honestly.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container narrow">
+        <div class="quiz-progress-wrap">
+            <div class="quiz-progress-bar" id="quizProgressBar"></div>
+        </div>
+        <p class="quiz-progress-text"><span id="answeredCount">0</span> of {{ questions|length }} answered</p>
+
+        <form method="POST" action="{{ url_for('interest_test') }}" id="quizForm" class="quiz-form">
+            {% for q in questions %}
+            <div class="quiz-question{% if loop.first %} is-active{% endif %}" data-question-index="{{ loop.index }}"{% if not loop.first %} hidden{% endif %}>
+                <p class="quiz-question-text">{{ loop.index }}. {{ q.text }}</p>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q{{ q.id }}" value="0" required> Not like me
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q{{ q.id }}" value="1"> A little like me
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q{{ q.id }}" value="2"> Like me
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q{{ q.id }}" value="3"> Very much like me
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="quiz-navigation">
+                <button type="button" class="btn btn-secondary" id="previousQuestion" disabled>Previous</button>
+                <span class="quiz-step" id="quizStep">Question 1 of {{ questions|length }}</span>
+                <button type="button" class="btn btn-primary" id="nextQuestion"{% if not questions %} disabled{% endif %}>Next</button>
+                <button type="submit" class="btn btn-primary" id="submitQuiz" hidden>See My Result</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/quiz.js', v='2') }}"></script>
+{% endblock %}

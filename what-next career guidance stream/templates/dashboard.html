@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Hi, {{ session.get('full_name') }} 👋</h1>
+        <p>Here's your career guidance overview.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <h2>Interest Test</h2>
+                {% if latest %}
+                    <p>Your last result: <strong>{{ latest['top_category'] }}</strong></p>
+                    <a href="{{ url_for('result') }}" class="btn btn-outline">View Result</a>
+                    <a href="{{ url_for('interest_test') }}" class="btn btn-primary">Retake Test</a>
+                {% else %}
+                    <p>You haven't taken the interest test yet.</p>
+                    <a href="{{ url_for('interest_test') }}" class="btn btn-primary">Take the Test</a>
+                {% endif %}
+            </div>
+
+            <div class="dash-card">
+                <h2>We'd Love Your Feedback</h2>
+                <p>Help us improve What Next? for future students.</p>
+                <a href="{{ url_for('feedback') }}" class="btn btn-outline">Give Feedback</a>
+            </div>
+
+            <div class="dash-card profile-card">
+                <div class="profile-card-heading">
+                    <div class="profile-avatar" aria-hidden="true">{{ (session.get('full_name') or 'U')[0]|upper }}</div>
+                    <div>
+                        <h2>Your Profile</h2>
+                        <p>Keep your details up to date.</p>
+                    </div>
+                </div>
+                <a href="{{ url_for('profile') }}" class="btn btn-outline">View and edit profile</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

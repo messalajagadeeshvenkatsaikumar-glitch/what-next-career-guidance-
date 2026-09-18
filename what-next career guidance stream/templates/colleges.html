@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Colleges — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Colleges</h1>
+        <p>Explore the types of institutions that offer these career paths.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="category-filter">
+            <a href="{{ url_for('colleges') }}" class="filter-chip {{ 'active' if not selected }}">All</a>
+            {% for cat in data %}
+                <a href="{{ url_for('colleges', category=cat) }}"
+                   class="filter-chip {{ 'active' if selected == cat }}">{{ cat }}</a>
+            {% endfor %}
+        </div>
+
+        {% for cat, info in data.items() %}
+            {% if not selected or selected == cat %}
+            <div class="info-block">
+                <h2>{{ cat }}</h2>
+                <ul class="check-list">
+                    {% for college in info.colleges %}
+                        <li>{{ college }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

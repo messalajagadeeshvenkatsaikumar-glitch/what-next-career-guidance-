@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Jobs — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Jobs</h1>
+        <p>Example roles you could pursue within each career path.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="category-filter">
+            <a href="{{ url_for('jobs') }}" class="filter-chip {{ 'active' if not selected }}">All</a>
+            {% for cat in data %}
+                <a href="{{ url_for('jobs', category=cat) }}"
+                   class="filter-chip {{ 'active' if selected == cat }}">{{ cat }}</a>
+            {% endfor %}
+        </div>
+
+        {% for cat, info in data.items() %}
+            {% if not selected or selected == cat %}
+            <div class="info-block">
+                <h2>{{ cat }}</h2>
+                <ul class="check-list">
+                    {% for job in info.jobs %}
+                        <li>{{ job }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

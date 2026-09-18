@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My Profile — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>My Profile</h1>
+        <p>Manage the details used to personalize your career guidance.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container narrow">
+        <div class="profile-layout">
+            <div class="profile-summary">
+                <div class="profile-avatar profile-avatar-large" aria-hidden="true">{{ user.full_name[0]|upper }}</div>
+                <h2>{{ user.full_name }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+            <form method="POST" class="form profile-form">
+                <label for="full_name">Full name</label>
+                <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="10" max="120" value="{{ user.age or '' }}">
+
+                <label for="education_level">Education level</label>
+                <input type="text" id="education_level" name="education_level" value="{{ user.education_level or '' }}" placeholder="e.g. Higher Secondary">
+
+                <button type="submit" class="btn btn-primary">Save profile</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

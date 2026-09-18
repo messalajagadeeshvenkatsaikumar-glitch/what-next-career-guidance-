@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Roadmap — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Roadmap</h1>
+        <p>Step-by-step paths from school to career.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="category-filter">
+            <a href="{{ url_for('roadmap') }}" class="filter-chip {{ 'active' if not selected }}">All</a>
+            {% for cat in data %}
+                <a href="{{ url_for('roadmap', category=cat) }}"
+                   class="filter-chip {{ 'active' if selected == cat }}">{{ cat }}</a>
+            {% endfor %}
+        </div>
+
+        {% for cat, info in data.items() %}
+            {% if not selected or selected == cat %}
+            <div class="info-block">
+                <h2>{{ cat }}</h2>
+                <ol class="roadmap-list">
+                    {% for step in info.roadmap %}
+                        <li>{{ step }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

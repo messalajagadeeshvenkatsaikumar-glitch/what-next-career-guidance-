@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Feedback — What Next?{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Share Your Feedback</h1>
+        <p>Your thoughts help us improve What Next? for other students.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container narrow">
+        <form method="POST" action="{{ url_for('feedback') }}" class="form">
+            <label for="name">Name (optional)</label>
+            <input type="text" id="name" name="name"
+                   value="{{ session.get('full_name', '') }}">
+
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" name="email">
+
+            <label for="rating">Rating</label>
+            <select id="rating" name="rating">
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="2">⭐⭐ Poor</option>
+                <option value="1">⭐ Very Poor</option>
+            </select>
+
+            <label for="message">Your Feedback</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit" class="btn btn-primary btn-full">Submit Feedback</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: what-next-career-guidance
+    env: python
+    rootDir: what-next career guidance stream
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: MYSQL_HOST
+        value: mysql-messalajagadeeshvenkatsaikumar-93dd.g.aivencloud.com
+      - key: MYSQL_PORT
+        value: "13939"
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DATABASE
+        value: defaultdb
+      - key: MYSQL_SSL_MODE
+        value: REQUIRED
+      - key: MYSQL_SSL_CA
+        value: certs/ca.pem
