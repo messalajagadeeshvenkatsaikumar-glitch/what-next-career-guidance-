@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — What Next?{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="container">
+        <div class="page-header">
+            <h1>Admin Dashboard</h1>
+            <p>Overview of users, feedback, messages, and quiz results.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Users</span>
+                <strong>{{ users|length }}</strong>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Feedback</span>
+                <strong>{{ feedback|length }}</strong>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Messages</span>
+                <strong>{{ messages|length }}</strong>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Quiz Results</span>
+                <strong>{{ results_count }}</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-panels">
+            <div class="panel">
+                <h2>Recent Users</h2>
+                {% if users %}
+                    <ul class="list-items">
+                        {% for user in users[:10] %}
+                            <li>
+                                <div>
+                                    <strong>{{ user.full_name }}</strong>
+                                    <span>{{ user.email }}</span>
+                                </div>
+                                <div class="item-actions">
+                                    <form method="POST" action="{{ url_for('admin_reset_user_password', user_id=user.id) }}" class="inline-form">
+                                        <input type="password" name="new_password" minlength="8" placeholder="New password" required aria-label="New password for {{ user.email }}">
+                                        <button type="submit" class="btn btn-small btn-secondary">Reset password</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('admin_reset_user_quiz', user_id=user.id) }}" onsubmit="return confirm('Reset all quiz results for this user?');">
+                                        <button type="submit" class="btn btn-small btn-warning">Reset quiz</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('admin_delete_user', user_id=user.id) }}" onsubmit="return confirm('Delete this user and all related quiz results and feedback?');">
+                                        <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No users yet.</p>
+                {% endif %}
+            </div>
+
+            <div class="panel">
+                <h2>Recent Feedback</h2>
+                {% if feedback %}
+                    <ul class="list-items">
+                        {% for item in feedback[:10] %}
+                            <li>
+                                <span>{{ item.message or item.feedback_text }}</span>
+                                <form method="POST" action="{{ url_for('admin_delete_feedback', feedback_id=item.id) }}" onsubmit="return confirm('Delete this feedback?');">
+                                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No feedback yet.</p>
+                {% endif %}
+            </div>
+
+            <div class="panel">
+                <h2>Recent Messages</h2>
+                {% if messages %}
+                    <ul class="list-items">
+                        {% for msg in messages[:10] %}
+                            <li>
+                                <span>{{ msg.name }} — {{ msg.email }}</span>
+                                <form method="POST" action="{{ url_for('admin_delete_message', message_id=msg.id) }}" onsubmit="return confirm('Delete this message?');">
+                                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No messages yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
