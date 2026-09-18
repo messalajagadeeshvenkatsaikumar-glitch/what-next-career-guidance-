@@ -6,7 +6,7 @@ services:
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -17,16 +17,14 @@ services:
       - key: ADMIN_PASSWORD
         generateValue: true
       - key: MYSQL_HOST
-        value: mysql-messalajagadeeshvenkatsaikumar-93dd.g.aivencloud.com
+        sync: false
       - key: MYSQL_PORT
-        value: "13939"
+        sync: false
       - key: MYSQL_USER
         sync: false
       - key: MYSQL_PASSWORD
         sync: false
       - key: MYSQL_DATABASE
-        value: defaultdb
+        sync: false
       - key: MYSQL_SSL_MODE
         value: REQUIRED
-      - key: MYSQL_SSL_CA
-        value: certs/ca.pem

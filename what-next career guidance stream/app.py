@@ -380,7 +380,11 @@ def about():
 
 @app.route('/health')
 def health():
-    connected = is_connected()
+    try:
+        connected = is_connected()
+    except (Error, KeyError, OSError, ValueError) as error:
+        app.logger.warning('Health check failed: %s', safe_error_message(error))
+        connected = False
     if connected:
         return jsonify({"status": "ok", "database": "connected"}), 200
     app.logger.warning('Health check failed: MySQL database not reachable.')
